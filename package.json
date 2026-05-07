@@ -1,0 +1,347 @@
+{
+  "name": "git-changelists",
+  "displayName": "%extension.displayName%",
+  "description": "%extension.description%",
+  "version": "0.1.0",
+  "publisher": "git-changelists",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "SCM Providers"
+  ],
+  "activationEvents": [
+    "workspaceContains:**/.git"
+  ],
+  "main": "./dist/extension.js",
+  "l10n": "./l10n",
+  "extensionDependencies": [
+    "vscode.git"
+  ],
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "git-changelists",
+          "title": "%viewsContainers.gitChangelists%",
+          "icon": "resources/icons/changelist.svg"
+        }
+      ]
+    },
+    "views": {
+      "git-changelists": [
+        {
+          "id": "gitChangelists.changelists",
+          "name": "%views.changelists%",
+          "type": "tree"
+        },
+        {
+          "id": "gitChangelists.commitPanel",
+          "name": "%views.commitPanel%",
+          "type": "webview"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "gitChangelists.createChangelist",
+        "title": "%command.createChangelist%",
+        "icon": "$(add)",
+        "category": "Git Changelists"
+      },
+      {
+        "command": "gitChangelists.deleteChangelist",
+        "title": "%command.deleteChangelist%",
+        "icon": "$(trash)",
+        "category": "Git Changelists"
+      },
+      {
+        "command": "gitChangelists.renameChangelist",
+        "title": "%command.renameChangelist%",
+        "icon": "$(edit)",
+        "category": "Git Changelists"
+      },
+      {
+        "command": "gitChangelists.setActiveChangelist",
+        "title": "%command.setActiveChangelist%",
+        "icon": "$(check)",
+        "category": "Git Changelists"
+      },
+      {
+        "command": "gitChangelists.toggleDontCommit",
+        "title": "%command.toggleDontCommit%",
+        "icon": "$(circle-slash)",
+        "category": "Git Changelists"
+      },
+      {
+        "command": "gitChangelists.moveFileToChangelist",
+        "title": "%command.moveFileToChangelist%",
+        "icon": "$(arrow-right)",
+        "category": "Git Changelists"
+      },
+      {
+        "command": "gitChangelists.moveHunkToChangelist",
+        "title": "%command.moveHunkToChangelist%",
+        "icon": "$(arrow-right)",
+        "category": "Git Changelists"
+      },
+      {
+        "command": "gitChangelists.moveAllToChangelist",
+        "title": "%command.moveAllToChangelist%",
+        "icon": "$(files)",
+        "category": "Git Changelists"
+      },
+      {
+        "command": "gitChangelists.commitChangelist",
+        "title": "%command.commitChangelist%",
+        "icon": "$(check)",
+        "category": "Git Changelists"
+      },
+      {
+        "command": "gitChangelists.commitAndPushChangelist",
+        "title": "%command.commitAndPushChangelist%",
+        "icon": "$(cloud-upload)",
+        "category": "Git Changelists"
+      },
+      {
+        "command": "gitChangelists.openDiff",
+        "title": "%command.openDiff%",
+        "icon": "$(diff)",
+        "category": "Git Changelists"
+      },
+      {
+        "command": "gitChangelists.editDescription",
+        "title": "%command.editDescription%",
+        "icon": "$(note)",
+        "category": "Git Changelists"
+      },
+      {
+        "command": "gitChangelists.refresh",
+        "title": "%command.refresh%",
+        "icon": "$(refresh)",
+        "category": "Git Changelists"
+      },
+      {
+        "command": "gitChangelists.resetState",
+        "title": "%command.resetState%",
+        "icon": "$(trash)",
+        "category": "Git Changelists"
+      },
+      {
+        "command": "gitChangelists.addFileToGit",
+        "title": "%command.addFileToGit%",
+        "icon": "$(add)",
+        "category": "Git Changelists"
+      },
+      {
+        "command": "gitChangelists.openSource",
+        "title": "Open Source File",
+        "icon": "$(go-to-file)",
+        "category": "Git Changelists"
+      },
+      {
+        "command": "gitChangelists.revertChange",
+        "title": "Revert Change",
+        "icon": "$(discard)",
+        "category": "Git Changelists"
+      },
+      {
+        "command": "gitChangelists.switchChangelistForLine",
+        "title": "Switch Changelist for Change",
+        "category": "Git Changelists"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "gitChangelists.createChangelist",
+          "when": "view == gitChangelists.changelists",
+          "group": "navigation"
+        },
+        {
+          "command": "gitChangelists.refresh",
+          "when": "view == gitChangelists.changelists",
+          "group": "navigation"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "gitChangelists.setActiveChangelist",
+          "when": "view == gitChangelists.changelists && viewItem =~ /^changelist/",
+          "group": "inline"
+        },
+        {
+          "command": "gitChangelists.commitChangelist",
+          "when": "view == gitChangelists.changelists && viewItem =~ /^changelist/ && viewItem != changelist.dontcommit",
+          "group": "1_commit"
+        },
+        {
+          "command": "gitChangelists.commitAndPushChangelist",
+          "when": "view == gitChangelists.changelists && viewItem =~ /^changelist/ && viewItem != changelist.dontcommit",
+          "group": "1_commit"
+        },
+        {
+          "command": "gitChangelists.renameChangelist",
+          "when": "view == gitChangelists.changelists && viewItem =~ /^changelist/ && viewItem != changelist.unversioned",
+          "group": "2_manage"
+        },
+        {
+          "command": "gitChangelists.deleteChangelist",
+          "when": "view == gitChangelists.changelists && viewItem =~ /^changelist/ && viewItem != changelist.default && viewItem != changelist.unversioned",
+          "group": "2_manage"
+        },
+        {
+          "command": "gitChangelists.toggleDontCommit",
+          "when": "view == gitChangelists.changelists && viewItem =~ /^changelist/",
+          "group": "2_manage"
+        },
+        {
+          "command": "gitChangelists.editDescription",
+          "when": "view == gitChangelists.changelists && viewItem =~ /^changelist/",
+          "group": "2_manage"
+        },
+        {
+          "command": "gitChangelists.moveAllToChangelist",
+          "when": "view == gitChangelists.changelists && viewItem =~ /^changelist/",
+          "group": "3_move"
+        },
+        {
+          "command": "gitChangelists.openDiff",
+          "when": "view == gitChangelists.changelists && viewItem == file",
+          "group": "inline"
+        },
+        {
+          "command": "gitChangelists.moveFileToChangelist",
+          "when": "view == gitChangelists.changelists && viewItem == file",
+          "group": "1_move"
+        },
+        {
+          "command": "gitChangelists.openSource",
+          "when": "view == gitChangelists.changelists && viewItem == file",
+          "group": "2_open"
+        },
+        {
+          "command": "gitChangelists.revertChange",
+          "when": "view == gitChangelists.changelists && viewItem == file",
+          "group": "2_open"
+        },
+        {
+          "command": "gitChangelists.moveHunkToChangelist",
+          "when": "view == gitChangelists.changelists && viewItem == hunk",
+          "group": "1_move"
+        },
+        {
+          "command": "gitChangelists.openSource",
+          "when": "view == gitChangelists.changelists && viewItem == hunk",
+          "group": "2_open"
+        },
+        {
+          "command": "gitChangelists.revertChange",
+          "when": "view == gitChangelists.changelists && viewItem == hunk",
+          "group": "2_open"
+        },
+        {
+          "command": "gitChangelists.openDiff",
+          "when": "view == gitChangelists.changelists && viewItem == hunk",
+          "group": "inline"
+        }
+      ],
+      "explorer/context": [
+        {
+          "command": "gitChangelists.addFileToGit",
+          "when": "explorerResourceIsFolder == false",
+          "group": "git@99"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Git Changelists",
+      "properties": {
+        "gitChangelists.autoRefreshInterval": {
+          "type": "number",
+          "default": 3000,
+          "description": "%config.autoRefreshInterval%"
+        },
+        "gitChangelists.showUnversioned": {
+          "type": "boolean",
+          "default": true,
+          "description": "%config.showUnversioned%"
+        },
+        "gitChangelists.confirmDeleteChangelist": {
+          "type": "boolean",
+          "default": true,
+          "description": "%config.confirmDeleteChangelist%"
+        }
+      }
+    },
+    "colors": [
+      {
+        "id": "gitChangelists.repoColor0",
+        "description": "Repository color 0 (blue)",
+        "defaults": { "dark": "#4A90D9", "light": "#4A90D9", "highContrast": "#4A90D9" }
+      },
+      {
+        "id": "gitChangelists.repoColor1",
+        "description": "Repository color 1 (green)",
+        "defaults": { "dark": "#50C878", "light": "#50C878", "highContrast": "#50C878" }
+      },
+      {
+        "id": "gitChangelists.repoColor2",
+        "description": "Repository color 2 (orange)",
+        "defaults": { "dark": "#FF8C42", "light": "#FF8C42", "highContrast": "#FF8C42" }
+      },
+      {
+        "id": "gitChangelists.repoColor3",
+        "description": "Repository color 3 (purple)",
+        "defaults": { "dark": "#9B59B6", "light": "#9B59B6", "highContrast": "#9B59B6" }
+      },
+      {
+        "id": "gitChangelists.repoColor4",
+        "description": "Repository color 4 (red)",
+        "defaults": { "dark": "#E74C3C", "light": "#E74C3C", "highContrast": "#E74C3C" }
+      },
+      {
+        "id": "gitChangelists.repoColor5",
+        "description": "Repository color 5 (cyan)",
+        "defaults": { "dark": "#17A2B8", "light": "#17A2B8", "highContrast": "#17A2B8" }
+      },
+      {
+        "id": "gitChangelists.repoColor6",
+        "description": "Repository color 6 (pink)",
+        "defaults": { "dark": "#FF6B9D", "light": "#FF6B9D", "highContrast": "#FF6B9D" }
+      },
+      {
+        "id": "gitChangelists.repoColor7",
+        "description": "Repository color 7 (yellow)",
+        "defaults": { "dark": "#F1C40F", "light": "#F1C40F", "highContrast": "#F1C40F" }
+      },
+      {
+        "id": "gitChangelists.repoColor8",
+        "description": "Repository color 8 (blue-gray)",
+        "defaults": { "dark": "#5D6D7E", "light": "#5D6D7E", "highContrast": "#5D6D7E" }
+      },
+      {
+        "id": "gitChangelists.repoColor9",
+        "description": "Repository color 9 (rose)",
+        "defaults": { "dark": "#E91E63", "light": "#E91E63", "highContrast": "#E91E63" }
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run build",
+    "build": "node esbuild.mjs --production",
+    "watch": "node esbuild.mjs --watch",
+    "lint": "eslint src --ext ts",
+    "test": "node --import tsx test/suite/runTests.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@types/vscode": "^1.85.0",
+    "@typescript-eslint/eslint-plugin": "^7.0.0",
+    "@typescript-eslint/parser": "^7.0.0",
+    "@vscode/vsce": "^3.9.1",
+    "esbuild": "^0.21.0",
+    "eslint": "^8.56.0",
+    "typescript": "^5.3.0"
+  }
+}

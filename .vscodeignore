@@ -1,0 +1,31 @@
+# Source files
+src/
+tsconfig.json
+.eslintrc.json
+esbuild.mjs
+
+# Development
+.vscode/
+.idea/
+.qoder/
+test/
+
+# Dependencies
+node_modules/
+
+# Build & packaging
+.gitignore
+.gitattributes
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Misc
+*.vsix
+coverage/
+.github/
