@@ -335,13 +335,7 @@ export class ChangelistManager implements vscode.Disposable {
   }
 
   getFileCountForChangelist(changelistId: string): number {
-    const paths = new Set<string>();
-    for (const assignment of this.state.assignments) {
-      if (assignment.changelistId === changelistId) {
-        paths.add(assignment.fileAbsolutePath);
-      }
-    }
-    return paths.size;
+    return this.getChangelistContents(changelistId).size;
   }
 
   getDiffForFile(filePath: string): ParsedFileDiff | undefined {

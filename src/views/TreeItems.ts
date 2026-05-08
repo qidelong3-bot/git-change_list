@@ -67,7 +67,7 @@ export function createRepoTreeItem(
 
   item.description = `${node.fileCount} · ${node.branch}`;
   item.iconPath = new vscode.ThemeIcon(
-    'stop',
+    'primitive-square',
     new vscode.ThemeColor(`gitChangelists.repoColor${node.colorIndex}`),
   );
   item.contextValue = 'repo';
