@@ -1,11 +1,11 @@
 # Git Changelists
 
 [![VS Code Version](https://img.shields.io/badge/VS%20Code-%5E1.85.0-blue)](https://code.visualstudio.com/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)]()
 
 > PhpStorm-like changelist management for Git repositories in VS Code.
 
-[中文文档](README.zh-cn.md)
+[中文文档]()
 
 ## Features
 
@@ -72,4 +72,4 @@ Contributions are welcome! Please feel free to submit issues or pull requests.
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE).
+This project is licensed under the MIT License.

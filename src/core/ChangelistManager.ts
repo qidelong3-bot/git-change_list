@@ -40,6 +40,46 @@ export class ChangelistManager implements vscode.Disposable {
     private readonly repoManager: MultiRepoManager,
   ) {
     this.state = this.storage.getState();
+    this.ensureFileHistory();
+  }
+
+  /** Seed fileHistory from existing assignments if it's empty (migration for users who grouped before fileHistory existed). */
+  private ensureFileHistory(): void {
+    if (!this.state.fileHistory) {
+      this.state.fileHistory = {};
+    }
+    if (
+      Object.keys(this.state.fileHistory).length === 0 &&
+      this.state.assignments.length > 0
+    ) {
+      const fileGroups = new Map<string, Map<string, number>>();
+      for (const assignment of this.state.assignments) {
+        if (assignment.changelistId === UNVERSIONED_CHANGELIST_ID) {
+          continue;
+        }
+        const groups =
+          fileGroups.get(assignment.fileAbsolutePath) || new Map<string, number>();
+        groups.set(
+          assignment.changelistId,
+          (groups.get(assignment.changelistId) || 0) + 1,
+        );
+        fileGroups.set(assignment.fileAbsolutePath, groups);
+      }
+      for (const [filePath, groups] of fileGroups) {
+        let bestId = '';
+        let bestCount = 0;
+        for (const [id, count] of groups) {
+          if (count > bestCount) {
+            bestId = id;
+            bestCount = count;
+          }
+        }
+        if (bestId) {
+          this.state.fileHistory[filePath] = bestId;
+        }
+      }
+      this.saveState();
+    }
   }
 
   getChangelists(): Changelist[] {
@@ -885,6 +925,9 @@ export class ChangelistManager implements vscode.Disposable {
     }
   }
 
+  private seenFiles = new Set<string>();
+  private seenHunks = new Set<string>();
+
   private syncSelectionState(): void {
     const currentFilePaths = new Set<string>();
     const currentHunkIds = new Set<string>();
@@ -908,12 +951,19 @@ export class ChangelistManager implements vscode.Disposable {
       }
     }
 
-    // Add new files/hunks as selected by default
+    // Add newly-discovered files/hunks as selected by default,
+    // but do NOT re-select files the user has explicitly deselected.
     for (const path of currentFilePaths) {
-      this.selectedFiles.add(path);
+      if (!this.seenFiles.has(path)) {
+        this.seenFiles.add(path);
+        this.selectedFiles.add(path);
+      }
     }
     for (const id of currentHunkIds) {
-      this.selectedHunks.add(id);
+      if (!this.seenHunks.has(id)) {
+        this.seenHunks.add(id);
+        this.selectedHunks.add(id);
+      }
     }
   }
 

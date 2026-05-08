@@ -510,7 +510,6 @@ export class CommitPanelProvider
 
     let i18n = {};
     let userEditedMessage = false;
-    let renderedChangelistId = '';
 
     window.addEventListener('message', (event) => {
       const msg = event.data;
@@ -518,7 +517,7 @@ export class CommitPanelProvider
         i18n = msg.i18n;
         renderChangelists(msg.changelists, msg.selectedChangelistId);
       } else if (msg.type === 'filesUpdate') {
-        renderFiles(msg.files || [], msg.changelistId);
+        renderFiles(msg.files || []);
         if (!userEditedMessage) {
           msgInput.value = msg.description || '';
         }
@@ -599,21 +598,7 @@ export class CommitPanelProvider
       vscode.postMessage({ type: 'changelistSelected', changelistId: selectedId });
     }
 
-    function captureSelection() {
-      const selection = new Map();
-      fileList.querySelectorAll('input[type="checkbox"]').forEach((checkbox) => {
-        const key = checkbox.dataset.filePath || checkbox.dataset.hunkId;
-        if (key) {
-          selection.set(key, checkbox.checked);
-        }
-      });
-      return selection;
-    }
-
-    function renderFiles(files, changelistId) {
-      const preserveSelection = renderedChangelistId === changelistId;
-      const previousSelection = preserveSelection ? captureSelection() : new Map();
-      renderedChangelistId = changelistId;
+    function renderFiles(files) {
       fileList.innerHTML = '';
 
       if (!files || files.length === 0) {
@@ -759,15 +744,6 @@ export class CommitPanelProvider
         }
       }
 
-      if (preserveSelection) {
-        fileList.querySelectorAll('input[type="checkbox"]').forEach((checkbox) => {
-          const key = checkbox.dataset.filePath || checkbox.dataset.hunkId;
-          if (key && previousSelection.has(key)) {
-            checkbox.checked = previousSelection.get(key);
-          }
-        });
-      }
-
       fileList.querySelectorAll('.file-cb').forEach((checkbox) => {
         updateFileCheckFromHunks(checkbox.dataset.filePath);
       });
@@ -779,10 +755,10 @@ export class CommitPanelProvider
         return;
       }
       const hunkCbs = fileList.querySelectorAll(
-        '.hunk-cb[data-parent-file="' + CSS.escape(filePath) + '"]',
+        '.hunk-cb[data-parent-file="' + CSS.escape(filePath) + '"]',  
       );
       const fileCb = fileList.querySelector(
-        '.file-cb[data-file-path="' + CSS.escape(filePath) + '"]',
+        '.file-cb[data-file-path="' + CSS.escape(filePath) + '"]',  
       );
       if (!fileCb || hunkCbs.length === 0) {
         return;
@@ -801,7 +777,7 @@ export class CommitPanelProvider
       for (const fileCb of fileCbs) {
         const filePath = fileCb.dataset.filePath;
         const hunkCbs = fileList.querySelectorAll(
-          '.hunk-cb[data-parent-file="' + CSS.escape(filePath) + '"]',
+          '.hunk-cb[data-parent-file="' + CSS.escape(filePath) + '"]', 
         );
 
         if (hunkCbs.length === 0) {
