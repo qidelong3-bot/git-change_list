@@ -4,6 +4,11 @@
   "description": "%extension.description%",
   "version": "0.1.0",
   "publisher": "git-changelists",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/qidelong3-bot/git-change_list.git"
+  },
+  "icon": "resources/icons/icon.png",
   "engines": {
     "vscode": "^1.85.0"
   },
@@ -149,6 +154,21 @@
         "command": "gitChangelists.switchChangelistForLine",
         "title": "Switch Changelist for Change",
         "category": "Git Changelists"
+      },
+      {
+        "command": "gitChangelists.getChangelists",
+        "title": "Get Changelists",
+        "category": "Git Changelists"
+      },
+      {
+        "command": "gitChangelists.getChangelistContents",
+        "title": "Get Changelist Contents",
+        "category": "Git Changelists"
+      },
+      {
+        "command": "gitChangelists.getAllContents",
+        "title": "Get All Changelist Contents",
+        "category": "Git Changelists"
       }
     ],
     "menus": {
@@ -278,52 +298,92 @@
       {
         "id": "gitChangelists.repoColor0",
         "description": "Repository color 0 (blue)",
-        "defaults": { "dark": "#4A90D9", "light": "#4A90D9", "highContrast": "#4A90D9" }
+        "defaults": {
+          "dark": "#4A90D9",
+          "light": "#4A90D9",
+          "highContrast": "#4A90D9"
+        }
       },
       {
         "id": "gitChangelists.repoColor1",
         "description": "Repository color 1 (green)",
-        "defaults": { "dark": "#50C878", "light": "#50C878", "highContrast": "#50C878" }
+        "defaults": {
+          "dark": "#50C878",
+          "light": "#50C878",
+          "highContrast": "#50C878"
+        }
       },
       {
         "id": "gitChangelists.repoColor2",
         "description": "Repository color 2 (orange)",
-        "defaults": { "dark": "#FF8C42", "light": "#FF8C42", "highContrast": "#FF8C42" }
+        "defaults": {
+          "dark": "#FF8C42",
+          "light": "#FF8C42",
+          "highContrast": "#FF8C42"
+        }
       },
       {
         "id": "gitChangelists.repoColor3",
         "description": "Repository color 3 (purple)",
-        "defaults": { "dark": "#9B59B6", "light": "#9B59B6", "highContrast": "#9B59B6" }
+        "defaults": {
+          "dark": "#9B59B6",
+          "light": "#9B59B6",
+          "highContrast": "#9B59B6"
+        }
       },
       {
         "id": "gitChangelists.repoColor4",
         "description": "Repository color 4 (red)",
-        "defaults": { "dark": "#E74C3C", "light": "#E74C3C", "highContrast": "#E74C3C" }
+        "defaults": {
+          "dark": "#E74C3C",
+          "light": "#E74C3C",
+          "highContrast": "#E74C3C"
+        }
       },
       {
         "id": "gitChangelists.repoColor5",
         "description": "Repository color 5 (cyan)",
-        "defaults": { "dark": "#17A2B8", "light": "#17A2B8", "highContrast": "#17A2B8" }
+        "defaults": {
+          "dark": "#17A2B8",
+          "light": "#17A2B8",
+          "highContrast": "#17A2B8"
+        }
       },
       {
         "id": "gitChangelists.repoColor6",
         "description": "Repository color 6 (pink)",
-        "defaults": { "dark": "#FF6B9D", "light": "#FF6B9D", "highContrast": "#FF6B9D" }
+        "defaults": {
+          "dark": "#FF6B9D",
+          "light": "#FF6B9D",
+          "highContrast": "#FF6B9D"
+        }
       },
       {
         "id": "gitChangelists.repoColor7",
         "description": "Repository color 7 (yellow)",
-        "defaults": { "dark": "#F1C40F", "light": "#F1C40F", "highContrast": "#F1C40F" }
+        "defaults": {
+          "dark": "#F1C40F",
+          "light": "#F1C40F",
+          "highContrast": "#F1C40F"
+        }
       },
       {
         "id": "gitChangelists.repoColor8",
         "description": "Repository color 8 (blue-gray)",
-        "defaults": { "dark": "#5D6D7E", "light": "#5D6D7E", "highContrast": "#5D6D7E" }
+        "defaults": {
+          "dark": "#5D6D7E",
+          "light": "#5D6D7E",
+          "highContrast": "#5D6D7E"
+        }
       },
       {
         "id": "gitChangelists.repoColor9",
         "description": "Repository color 9 (rose)",
-        "defaults": { "dark": "#E91E63", "light": "#E91E63", "highContrast": "#E91E63" }
+        "defaults": {
+          "dark": "#E91E63",
+          "light": "#E91E63",
+          "highContrast": "#E91E63"
+        }
       }
     ]
   },
@@ -342,6 +402,7 @@
     "@vscode/vsce": "^3.9.1",
     "esbuild": "^0.21.0",
     "eslint": "^8.56.0",
+    "sharp": "^0.34.5",
     "typescript": "^5.3.0"
   }
 }

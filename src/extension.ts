@@ -12,6 +12,8 @@ import { registerMoveCommands } from './commands/moveCommands';
 import { registerCommitCommands } from './commands/commitCommands';
 import { registerDiffCommands } from './commands/diffCommands';
 import { registerEditorCommands } from './commands/editorCommands';
+import { registerQueryCommands } from './commands/queryCommands';
+import { StateExporter } from './core/StateExporter';
 
 export async function activate(
   context: vscode.ExtensionContext,
@@ -37,6 +39,10 @@ export async function activate(
   // 4. Initialize changelist manager
   const manager = new ChangelistManager(storage, gitService, repoManager);
   context.subscriptions.push(manager);
+
+  // 4b. Initialize state exporter so agents can read changelist data from file
+  const stateExporter = new StateExporter(manager);
+  context.subscriptions.push(stateExporter);
 
   // 5. Create tree view
   const treeProvider = new ChangelistTreeProvider(manager, repoManager);
@@ -123,6 +129,7 @@ export async function activate(
   registerCommitCommands(context, manager, gitService);
   registerDiffCommands(context);
   registerEditorCommands(context, manager, gitService);
+  registerQueryCommands(context, manager);
 
   // Refresh command
   context.subscriptions.push(

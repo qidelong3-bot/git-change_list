@@ -119,6 +119,9 @@ export class CommitPanelProvider
         selectAll: vscode.l10n.t('Select All'),
         deselectAll: vscode.l10n.t('Deselect All'),
         lines: vscode.l10n.t('Lines __START__-__END__'),
+        previewDiff: vscode.l10n.t('Preview diff'),
+        diff: vscode.l10n.t('Diff'),
+        hunk: vscode.l10n.t('Hunk'),
       },
     });
 
@@ -184,7 +187,7 @@ export class CommitPanelProvider
         'vscode.diff',
         gitUri,
         fileUri,
-        `${fileName} (Working Tree)`,
+        `${fileName} (${vscode.l10n.t('Working Tree')})`,
       );
     } catch {
       const doc = await vscode.workspace.openTextDocument(fileUri);
@@ -341,7 +344,7 @@ export class CommitPanelProvider
 
   private getHtml(): string {
     return /* html */ `<!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -634,8 +637,8 @@ export class CommitPanelProvider
 
         const diffBtn = document.createElement('button');
         diffBtn.className = 'diff-btn';
-        diffBtn.title = 'Preview diff';
-        diffBtn.textContent = 'Diff';
+        diffBtn.title = i18n.previewDiff || 'Preview diff';
+        diffBtn.textContent = i18n.diff || 'Diff';
         diffBtn.addEventListener('click', (event) => {
           event.stopPropagation();
           vscode.postMessage({ type: 'openDiff', absolutePath: file.absolutePath });
@@ -700,7 +703,7 @@ export class CommitPanelProvider
               .replace('__START__', String(start))
               .replace('__END__', String(start + count - 1));
           } else {
-            hunkInfo.textContent = hunk.header || 'Hunk';
+            hunkInfo.textContent = hunk.header || (i18n.hunk || 'Hunk');
           }
 
           const hunkStats = document.createElement('span');
@@ -709,8 +712,8 @@ export class CommitPanelProvider
 
           const hunkDiffBtn = document.createElement('button');
           hunkDiffBtn.className = 'diff-btn';
-          hunkDiffBtn.title = 'Preview diff';
-          hunkDiffBtn.textContent = 'Diff';
+          hunkDiffBtn.title = i18n.previewDiff || 'Preview diff';
+          hunkDiffBtn.textContent = i18n.diff || 'Diff';
           hunkDiffBtn.addEventListener('click', (event) => {
             event.stopPropagation();
             vscode.postMessage({

@@ -30,5 +30,9 @@
   "Enter changelist description (used as default commit message)": "输入变更列表描述（用作默认提交信息）",
   "Select All": "全选",
   "Deselect All": "取消全选",
-  "Lines __START__-__END__": "第 __START__-__END__ 行"
+  "Lines __START__-__END__": "第 __START__-__END__ 行",
+  "Preview diff": "预览差异",
+  "Diff": "差异",
+  "Hunk": "代码块",
+  "Working Tree": "工作区"
 }

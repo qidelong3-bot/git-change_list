@@ -30,5 +30,9 @@
   "Enter changelist description (used as default commit message)": "Enter changelist description (used as default commit message)",
   "Select All": "Select All",
   "Deselect All": "Deselect All",
-  "Lines __START__-__END__": "Lines __START__-__END__"
+  "Lines __START__-__END__": "Lines __START__-__END__",
+  "Preview diff": "Preview diff",
+  "Diff": "Diff",
+  "Hunk": "Hunk",
+  "Working Tree": "Working Tree"
 }
